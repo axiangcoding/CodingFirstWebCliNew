@@ -2,25 +2,25 @@
 
 A Quasar Framework app
 
-## Install the dependencies
+## 安装依赖
 ```bash
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### 以开发模式启动APP (热部署，错误报告等)
 ```bash
 quasar dev
 ```
 
-### Lint the files
+### 格式化代码
 ```bash
 npm run lint
 ```
 
-### Build the app for production
+### 以生产模式构建APP
 ```bash
 quasar build
 ```
 
-### Customize the configuration
+### 自定义设置
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
