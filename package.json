@@ -9,6 +9,7 @@
   "private": true,
   "scripts": {
     "dev": "quasar dev",
+    "deploy": "push-dir --dir=dist/spa --remote=github-publish --branch=master",
     "build": "quasar build",
     "build:pwa": "quasar build -m pwa",
     "lint": "eslint --ext .js,.vue src",
@@ -26,7 +27,8 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-loader": "^3.0.3",
-    "eslint-plugin-vue": "^6.1.2"
+    "eslint-plugin-vue": "^6.1.2",
+    "push-dir": "^0.4.1"
   },
   "engines": {
     "node": ">= 10.18.1",

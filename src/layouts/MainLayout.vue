@@ -25,7 +25,7 @@
         </div>
       </q-toolbar>
 
-      <q-tabs class="glossy" align="left" inline-label>
+      <q-tabs class="glossy" align="left" inline-label indicator-color="blue-grey">
         <q-route-tab icon="home" to="/" label="主 页" />
         <q-route-tab icon="menu" to="/" label="题 库" />
         <!-- <q-btn-dropdown auto-close stretch flat icon="menu" label="题 库">
@@ -44,7 +44,6 @@
         <q-route-tab icon="format_list_numbered" to="/" label="排 名" />
         <q-route-tab icon="chat_bubble" to="/" label="讨 论" />
         <q-route-tab icon="store_mall_directory" to="/" label="商 城" />
-        <q-route-tab to="/" />
       </q-tabs>
     </q-header>
 
@@ -56,7 +55,7 @@
       </q-page-scroller>
     </q-page-container>
 
-    <q-footer bordered reveal class="bg-grey-8 text-white my-footer">
+    <q-footer  class="bg-grey-8 text-white my-footer">
       <div class="row justify-center">
         <div class="text-h4">
           CodingFirst
