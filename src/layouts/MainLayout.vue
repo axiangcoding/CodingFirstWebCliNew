@@ -16,7 +16,7 @@
           </q-tabs>
         </div>
         <div v-else>
-          <q-btn :label="fullNickname" class="glossy" color="secondry">
+          <q-btn icon="person" :label="fullNickname" class="glossy" color="secondry">
             <q-menu>
               <PersonInfoPane></PersonInfoPane>
             </q-menu>

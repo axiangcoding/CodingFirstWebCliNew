@@ -20,7 +20,7 @@ const routes = [
         },
         children: [
           {
-            path: "local",
+            path: "/",
             name: "localProblem",
             component: () => import("pages/problem-list/localProblem.vue"),
             meta: {

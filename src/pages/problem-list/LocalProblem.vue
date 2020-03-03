@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <br />
+    <q-banner class="text-white bg-positive">TIP：本地题库指的是题目题面和样例均保留在本地的题目集，但不代表所有题目都是我们自己出的哦</q-banner>
     <q-card class="my-card">
       <q-card-section class="bg-blue">
         <div class="text-h6 text-white">本地题库</div>
@@ -46,7 +46,7 @@
         </q-select>
         <q-btn class="q-mr-md" color="primary" round icon="search" @click="getProblem()"></q-btn>
         <q-btn color="negative" round icon="clear_all" @click="clearSearch()">
-          <q-tooltip>清空全部</q-tooltip>
+          <q-tooltip>重置筛选</q-tooltip>
         </q-btn>
       </q-card-section>
       <q-card-section>
@@ -81,13 +81,21 @@
               >未解决</q-chip>
             </template>
           </el-table-column>
-          <el-table-column prop="problemId" label="#" min-width="20%" />
-          <el-table-column prop="Title" label="题目标题" min-width="65%">
+          <el-table-column label="#" min-width="25%">
+            <template slot-scope="scope">
+              <span class="text-orange text-weight-bold">{{scope.row.problemId}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="Title" label="题目标题" min-width="60%">
             <template slot-scope="scope">
               <q-btn flat color="primary" :label="scope.row.title" />
             </template>
           </el-table-column>
-          <el-table-column prop="ratio" label="通过率（通过人数/总提交数）" min-width="50%"></el-table-column>
+          <el-table-column label="通过率（通过人数/总提交数）" min-width="50%">
+            <template slot-scope="scope">
+              <span class="text-secondary text-weight-bold">{{scope.row.ratio}}</span>
+            </template>
+          </el-table-column>
           <el-table-column label="题目难度" min-width="20%">
             <template slot-scope="scope">
               <q-chip
@@ -110,7 +118,11 @@
               >{{scope.row.difficult}}</q-chip>
             </template>
           </el-table-column>
-          <el-table-column label="题目来源" prop="belongToOj" min-width="25%"></el-table-column>
+          <el-table-column label="题目来源" prop="belongToOj" min-width="25%">
+            <template slot-scope="scope">
+              <span class="text-info text-weight-bold">{{scope.row.belongToOj}}</span>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="row">
           <q-space />
@@ -126,6 +138,7 @@
         </div>
       </q-card-section>
     </q-card>
+    <br />
   </q-page>
 </template>
 
@@ -141,7 +154,7 @@ export default {
       },
       pagination: {
         currentPage: 1,
-        pageSize: 20,
+        pageSize: 10,
         totalRows: 0
       },
       data: [],
@@ -194,6 +207,6 @@ export default {
 .my-card {
   width: 90%;
   margin: auto;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 </style>
