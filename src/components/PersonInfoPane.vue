@@ -4,10 +4,16 @@
       <div style="max-width: 200px">
         <div class="text-h6 q-mb-md">个人面板</div>
         <div class="q-gutter-x-sm q-gutter-y-sm">
-          <q-btn color="positive" label="每日签到" />
+          <q-btn color="positive" label="每日签到">
+            <q-badge color="orange" floating>1</q-badge>
+          </q-btn>
+          <q-btn color="info" label="系统消息">
+            <q-badge color="orange" floating>22</q-badge>
+          </q-btn>
           <q-btn color="accent" label="个人信息" />
-          <q-btn color="info" label="系统消息" />
+
           <q-btn color="warning" label="修改资料" />
+          <q-btn color="negative" label="系统设置" />
         </div>
       </div>
       <q-separator vertical inset class="q-mx-lg" />
@@ -16,11 +22,8 @@
           <img :src="this.$store.getters['global/getPrivateInfo'].avatarUrl" />
         </q-avatar>
 
-        <div
-          class="text-subtitle1 q-mt-md q-mb-xs"
-        >{{this.$store.getters['global/getPrivateInfo'].nickname}}</div>
-
-        <q-btn color="primary" label="退出登录" push size="sm" @click="doLogOut()" />
+        <div class="text-h6 q-mt-md q-mb-xs">{{this.$store.getters['global/getUsername']}}</div>
+        <q-btn color="primary" label="退出登录" push size="md" @click="doLogOut()" />
       </div>
     </div>
   </div>

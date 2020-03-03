@@ -12,6 +12,32 @@ const routes = [
         }
       },
       {
+        path: "problem-list",
+        name: "problemList",
+        component: () => import("layouts/ProblemListLayout.vue"),
+        meta: {
+          title: "题库"
+        },
+        children: [
+          {
+            path: "local",
+            name: "localProblem",
+            component: () => import("pages/problem-list/localProblem.vue"),
+            meta: {
+              title: "本地题库"
+            }
+          },
+          {
+            path: "vj",
+            name: "VJProblem",
+            component: () => import("pages/problem-list/VJProblem.vue"),
+            meta: {
+              title: "Virtual Judge题库"
+            }
+          }
+        ]
+      },
+      {
         path: "login",
         name: "login",
         component: () => import("pages/Login.vue"),

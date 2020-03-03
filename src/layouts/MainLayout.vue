@@ -8,6 +8,7 @@
             <!-- <img src="https://i.loli.net/2020/03/02/hzBesEd89T42JUL.png" /> -->
           </q-avatar>&emsp;一码当先 | CodingFirst
         </q-toolbar-title>
+        <q-space />
         <div v-if="!this.$store.getters['global/getIsLogin']">
           <q-tabs inline-label indicator-color="#ffffff">
             <q-route-tab icon="person_add" to="/register" label="注册" />
@@ -15,19 +16,17 @@
           </q-tabs>
         </div>
         <div v-else>
-          <q-btn-dropdown
-            class="glossy"
-            color="secondry"
-            :label="this.$store.getters['global/getUsername']"
-          >
-            <PersonInfoPane></PersonInfoPane>
-          </q-btn-dropdown>
+          <q-btn :label="fullNickname" class="glossy" color="secondry">
+            <q-menu>
+              <PersonInfoPane></PersonInfoPane>
+            </q-menu>
+          </q-btn>
         </div>
       </q-toolbar>
 
       <q-tabs class="glossy" align="left" inline-label indicator-color="blue-grey">
         <q-route-tab icon="home" to="/" label="主 页" />
-        <q-route-tab icon="menu" to="/" label="题 库" />
+        <q-route-tab icon="menu" to="/problem-list" label="题 库" />
         <!-- <q-btn-dropdown auto-close stretch flat icon="menu" label="题 库">
           <q-list avatar>
             <q-item clickable>
@@ -48,14 +47,17 @@
     </q-header>
 
     <q-page-container>
-      <router-view />
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
       <!-- place QPageScroller at end of page -->
+      <!-- 回到顶部组件 -->
       <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
         <q-btn fab icon="keyboard_arrow_up" color="primary" />
       </q-page-scroller>
     </q-page-container>
 
-    <q-footer  class="bg-grey-8 text-white my-footer">
+    <q-footer class="bg-grey-8 text-white my-footer">
       <div class="row justify-center">
         <div class="text-h4">
           CodingFirst
@@ -73,26 +75,32 @@
         </q-btn-group>
       </div>
       <div class="row justify-center text-h7 text-amber-7">
-        Power by&emsp;
+        Power by&nbsp;
         <q-icon name="copyright" />&nbsp;福建工程学院 - OJ项目组
       </div>
-      <!-- <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
-          </q-avatar>
-      </q-toolbar-title>-->
     </q-footer>
+    <CleverRobot></CleverRobot>
   </q-layout>
 </template>
 
 <script>
 import PersonInfoPane from "components/PersonInfoPane";
+import CleverRobot from "components/CleverRobot";
 export default {
   components: {
-    PersonInfoPane
+    PersonInfoPane,
+    CleverRobot
   },
   data() {
     return {};
+  },
+  computed: {
+    fullNickname() {
+      let info = this.$store.getters["global/getPrivateInfo"];
+      return (
+        info.adjectiveTitle + " " + info.articleTitle + " " + info.nickname
+      );
+    }
   },
   methods: {}
 };
@@ -101,5 +109,22 @@ export default {
 <style lang="scss" scoped>
 .my-footer {
   min-height: 90px;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: opacity 0.5s;
+}
+
+.fade-leave {
+  opacity: 1;
+}
+
+.fade-leave-active {
+  opacity: 0;
+  transition: opacity 0.5s;
 }
 </style>

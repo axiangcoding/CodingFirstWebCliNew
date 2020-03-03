@@ -68,18 +68,39 @@ axios.interceptors.response.use(
     return res;
   },
   error => {
+    console.log(error);
     if (
       String(error)
         .toLowerCase()
-        .indexOf("timeout") !== -1
+        .indexOf("error") !== -1
     ) {
-      Message.error("服务器繁忙，请稍后重试！");
+      Notify.create({
+        message: "服务端异常",
+        caption: "服务器繁忙，请稍后重试！",
+        color: "negative",
+        icon: "error"
+      });
     } else if (error.response.status === 404) {
-      Message.error("服务器好像挂了，要不等等试试");
+      Notify.create({
+        message: "服务端异常",
+        caption: "服务器好像挂了，要不等等试试",
+        color: "negative",
+        icon: "error"
+      });
     } else if (error.response.status === 500) {
-      Message.error("服务器内部错误！错误原因：" + error.response.data.msg);
+      Notify.create({
+        message: "服务端异常",
+        caption: "服务器好像出现了问题：" + error.response.data.msg,
+        color: "negative",
+        icon: "error"
+      });
     } else {
-      Message.error(error.response.data.msg);
+      Notify.create({
+        message: "服务端异常",
+        caption: error,
+        color: "negative",
+        icon: "error"
+      });
     }
     return Promise.reject(error);
   }
