@@ -1,11 +1,12 @@
 <template>
-  <q-page class="body1">
-    <q-card class="shadow-6 my-card fixed-center">
+  <q-page class="row">
+    <q-space class="col"></q-space>
+    <q-card class="col-4 q-my-xl shadow-6 my-card">
       <q-card-section class="bg-primary text-white">
         <div class="text-h6">欢迎登录！</div>
       </q-card-section>
       <q-form @submit="onSubmit" @reset="onReset">
-        <q-card-section class="bg-white text-black">
+        <q-card-section>
           <q-input
             v-model="loginName"
             class="q-mb-lg"
@@ -15,10 +16,8 @@
             lazy-rules
             :rules="[
           val => val !== null && val !== '' || '请输入用户名',
-          val => val.length > 4 && val.length < 16 || '4 - 16个字符'
-        ]"
+          val => val.length > 4 && val.length < 16 || '4 - 16个字符']"
           />
-
           <q-input
             color="blue"
             v-model="loginPwd"
@@ -38,7 +37,7 @@
               />
             </template>
           </q-input>
-          <q-checkbox v-model="rememberPwd" label="记住密码" />
+          <q-checkbox v-model="rememberPwd" label="记住密码（请确保是本人的电脑）" />
         </q-card-section>
         <q-card-actions align="around">
           <q-btn glossy type="reset" color="secondary" size="lg" flat>重 置</q-btn>
@@ -50,6 +49,7 @@
         </div>
       </q-form>
     </q-card>
+    <q-space class="col"></q-space>
   </q-page>
 </template>
 
@@ -64,20 +64,27 @@ export default {
     };
   },
   mounted() {
-    if (this.$route.query.relogin) {
-      this.$q.notify({
-        message: "已退出登录",
-        caption: "你已退出登录，欢迎再次回来哦",
-        color: "warning",
-        icon: "warning",
-        timeout: 2000
-      });
-      this.$store.commit("global/logout");
-    } else {
-    }
+    console.log(this.rememberPwd);
+    this.rememberPwd = this.$q.cookies.has("rememberPwd")
+      ? this.$q.cookies.get("rememberPwd")
+      : this.rememberPwd;
+    this.loginName = this.$q.cookies.has("loginName")
+      ? this.$q.cookies.get("loginName")
+      : this.loginName;
+    this.loginPwd = this.$q.cookies.has("loginPwd")
+      ? this.$q.cookies.get("loginPwd")
+      : this.loginPwd;
   },
   methods: {
     onSubmit() {
+      this.$q.cookies.set("rememberPwd", this.rememberPwd);
+      if (this.rememberPwd) {
+        this.$q.cookies.set("loginName", this.loginName);
+        this.$q.cookies.set("loginPwd", this.loginPwd);
+      } else {
+        this.$q.cookies.remove("loginName");
+        this.$q.cookies.remove("loginPwd");
+      }
       this.doLogin();
     },
     onReset() {
@@ -97,7 +104,7 @@ export default {
         this.$store.commit("global/setUsername", data.datas[0]);
         this.$store.commit("global/setToken", data.datas[1]);
         this.$store.commit("global/setPrivateInfo", data.datas[2]);
-        this.$router.push("/");
+        this.$router.push({ name: "index" });
         this.$q.notify({
           message: "登录成功",
           caption: "欢迎回来，亲爱的" + data.datas[0],
@@ -106,9 +113,6 @@ export default {
           timeout: 2000
         });
       }
-      // this.$store.commit("global/setToken", "token");
-      // this.$store.commit("global/setUsername", "username");
-      // console.log(this.$store.state.global.token);
     }
   }
 };
@@ -116,6 +120,5 @@ export default {
 
 <style lang="scss" scoped>
 .my-card {
-  width: 35%;
 }
 </style>

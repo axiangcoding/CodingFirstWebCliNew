@@ -52,8 +52,8 @@
       </transition>
       <!-- place QPageScroller at end of page -->
       <!-- 回到顶部组件 -->
-      <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-        <q-btn fab icon="keyboard_arrow_up" color="primary" />
+      <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[9, 18]">
+        <q-btn fab icon="keyboard_arrow_up" color="primary" class="z-top" />
       </q-page-scroller>
     </q-page-container>
 
@@ -99,8 +99,10 @@ export default {
   computed: {
     fullNickname() {
       let info = this.$store.getters["global/getPrivateInfo"];
+      let adjectiveTitle = info.adjectiveTitle?info.adjectiveTitle:""
+      let articleTitle = info.articleTitle?info.articleTitle:""
       return (
-        info.adjectiveTitle + " " + info.articleTitle + " " + info.nickname
+        adjectiveTitle + " " + articleTitle + " " + info.nickname
       );
     }
   },

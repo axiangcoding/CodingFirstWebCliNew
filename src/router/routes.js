@@ -46,6 +46,14 @@ const routes = [
         }
       },
       {
+        path: "register",
+        name: "register",
+        component: () => import("pages/Register.vue"),
+        meta: {
+          title: "注册"
+        }
+      },
+      {
         path: "*",
         component: () => import("pages/Error404.vue"),
         meta: {

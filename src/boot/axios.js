@@ -1,13 +1,11 @@
 import Vue from "vue";
 import axios from "axios";
 import { Notify, Dialog } from "quasar";
-import router from "vue-router";
 
 const store = require("../store/index");
 
 axios.defaults.baseURL = process.env.API;
 axios.defaults.timeout = 15000;
-axios.defaults.headers["token"] = store.default.getters["global/getToken"];
 
 axios.interceptors.response.use(
   res => {
@@ -44,14 +42,15 @@ axios.interceptors.response.use(
         },
         persistent: true
       }).onOk(() => {
-        store.commit("global/logout");
-        window.location.href = "/login?relogin=true";
+        // 退出登录
+        store.default.commit("global/logout");
+        // 返回登录页面
+        store.default.$router.push("login");
       });
-      // TODO: 弹出对话框
     } else if (res.data.code === 30001) {
       Notify.create({
-        message: "系统问题",
-        caption: "业务执行失败，系统可能出现了问题，请稍后重试",
+        message: "操作失败",
+        caption: res.data.msg,
         color: "negative",
         icon: "error"
       });
@@ -134,7 +133,6 @@ var http = {
    * @param  {请求参数} params
    */
   post: function(url, params) {
-    console.log(store.default);
     return new Promise((resolve, reject) => {
       axios({
         method: "post",
@@ -160,7 +158,7 @@ var http = {
         url: url,
         data: data,
         headers: {
-          token: store.default.getters["global/getToken"],
+          token: store.getters["global/getToken"],
           "Content-Type": "multipart/form-data"
         }
       })

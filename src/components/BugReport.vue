@@ -15,7 +15,7 @@
             emit-value
             map-options
             label="Bug类型"
-            :rules="[ val => val!='' || '你想报告哪种类型的BUG？' ]"
+            :rules="[ val => val!=='' || '你想报告哪种类型的BUG？' ]"
           />
           <q-input
             ref="title"
