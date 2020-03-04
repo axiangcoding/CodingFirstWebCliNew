@@ -4,8 +4,8 @@
       <img src="~assets/sad.svg" style="width:30vw;max-width:150px;" />
     </p>
     <p class="text-faded">
-      Sorry, nothing here...
       <strong>(404)</strong>
+      对不起，这个页面还没开发（如果不是你乱输的路径的话）
     </p>
     <q-btn color="secondary" style="width:200px;" to="/" label="Go back" />
   </div>

@@ -3,7 +3,7 @@
     <q-header class="bg-primary text-white" height-hint="98">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar color="secondary">
+          <q-avatar color="light-blue">
             CF
             <!-- <img src="https://i.loli.net/2020/03/02/hzBesEd89T42JUL.png" /> -->
           </q-avatar>&emsp;一码当先 | CodingFirst
@@ -24,7 +24,7 @@
         </div>
       </q-toolbar>
 
-      <q-tabs class="glossy" align="left" inline-label indicator-color="blue-grey">
+      <q-tabs class="glossy" align="left" inline-label indicator-color="blue">
         <q-route-tab icon="home" to="/" label="主 页" />
         <q-route-tab icon="menu" to="/problem-list" label="题 库" />
         <!-- <q-btn-dropdown auto-close stretch flat icon="menu" label="题 库">
@@ -66,7 +66,7 @@
       </div>
       <div class="row justify-center">
         <q-btn-group outline>
-          <q-btn outline color="white" label="Bug反馈" />
+          <q-btn outline color="white" label="Bug反馈" @click="openBugReport()" />
           <q-btn outline color="white" label="FAQ" />
           <q-btn outline color="white" label="开发日志" />
           <q-btn outline color="white" label="开发团队" />
@@ -86,10 +86,12 @@
 <script>
 import PersonInfoPane from "components/PersonInfoPane";
 import CleverRobot from "components/CleverRobot";
+import BugReport from "components/BugReport";
 export default {
   components: {
     PersonInfoPane,
     CleverRobot
+    // BugReport
   },
   data() {
     return {};
@@ -102,7 +104,24 @@ export default {
       );
     }
   },
-  methods: {}
+  methods: {
+    openBugReport() {
+      this.$q
+        .dialog({
+          component: BugReport,
+          parent: this
+        })
+        .onOk(() => {
+          // alert("ok");
+        })
+        .onCancel(() => {
+          // alert("cancel");
+        })
+        .onDismiss(() => {
+          // alert("called on ok or cancel");
+        });
+    }
+  }
 };
 </script>
 

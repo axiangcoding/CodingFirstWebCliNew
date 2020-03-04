@@ -3,12 +3,15 @@
     <q-banner class="text-white bg-positive">TIP：本地题库指的是题目题面和样例均保留在本地的题目集，但不代表所有题目都是我们自己出的哦</q-banner>
     <q-card class="my-card">
       <q-card-section class="bg-blue">
-        <div class="text-h6 text-white">本地题库</div>
+        <div class="text-h6 text-white">
+          <q-avatar color="secondary">LC</q-avatar>本地题库
+        </div>
       </q-card-section>
       <q-card-section class="q-gutter-sm row items-center">
         <q-input
           v-model="filter.searchProId"
           standout
+          dense
           class="q-mr-md"
           label="题号"
           placeholder="输入题号，可模糊查询"
@@ -20,6 +23,7 @@
         <q-input
           v-model="filter.searchTitle"
           standout
+          dense
           class="q-mr-md"
           label="标题"
           placeholder="输入标题，可模糊查询"
@@ -30,6 +34,7 @@
         </q-input>
         <q-select
           filled
+          dense
           class="q-mr-md"
           v-model="filter.searchTag"
           :options="tagOptions"
@@ -45,7 +50,7 @@
           </template>
         </q-select>
         <q-btn class="q-mr-md" color="primary" round icon="search" @click="getProblem()"></q-btn>
-        <q-btn color="negative" round icon="clear_all" @click="clearSearch()">
+        <q-btn color="negative" round icon="clear_all" @click="cleanFilter()">
           <q-tooltip>重置筛选</q-tooltip>
         </q-btn>
       </q-card-section>
@@ -166,7 +171,7 @@ export default {
     this.getProblemTags();
   },
   methods: {
-    clearSearch() {
+    cleanFilter() {
       this.filter.searchProId = "";
       this.filter.searchTitle = "";
       this.filter.searchTag = "";
@@ -205,7 +210,7 @@ export default {
 
 <style lang="scss" scoped>
 .my-card {
-  width: 90%;
+  width: 95%;
   margin: auto;
   margin-top: 20px;
 }

@@ -2,11 +2,12 @@ import Vue from "vue";
 import axios from "axios";
 import { Notify, Dialog } from "quasar";
 import router from "vue-router";
-import store from "../store/index";
+
+const store = require("../store/index");
 
 axios.defaults.baseURL = process.env.API;
 axios.defaults.timeout = 15000;
-axios.defaults.headers.common["token"] = store().state.global.token;
+axios.defaults.headers["token"] = store.default.getters["global/getToken"];
 
 axios.interceptors.response.use(
   res => {
@@ -20,7 +21,7 @@ axios.interceptors.response.use(
     } else if (res.data.code === 20001) {
       Notify.create({
         message: "未登录",
-        caption: "您未登录，请登录后查看",
+        caption: "您未登录，请登录后再行操作",
         color: "negative",
         icon: "error"
       });
@@ -45,7 +46,6 @@ axios.interceptors.response.use(
       }).onOk(() => {
         store.commit("global/logout");
         window.location.href = "/login?relogin=true";
-        // router.push("/register");
       });
       // TODO: 弹出对话框
     } else if (res.data.code === 30001) {
@@ -116,7 +116,10 @@ var http = {
       axios({
         method: "get",
         url: url,
-        params: params
+        params: params,
+        headers: {
+          token: store.default.getters["global/getToken"]
+        }
       })
         .then(response => {
           resolve(response.data);
@@ -131,12 +134,16 @@ var http = {
    * @param  {请求参数} params
    */
   post: function(url, params) {
+    console.log(store.default);
     return new Promise((resolve, reject) => {
       axios({
         method: "post",
         url: url,
         // 放在请求体内
-        data: params
+        data: params,
+        headers: {
+          token: store.default.getters["global/getToken"]
+        }
       })
         .then(response => {
           resolve(response.data);
@@ -153,6 +160,7 @@ var http = {
         url: url,
         data: data,
         headers: {
+          token: store.default.getters["global/getToken"],
           "Content-Type": "multipart/form-data"
         }
       })

@@ -14,6 +14,7 @@
 
           <q-btn color="warning" label="修改资料" />
           <q-btn color="negative" label="系统设置" />
+          <q-btn color="orange" label="身份认证" />
         </div>
       </div>
       <q-separator vertical inset class="q-mx-lg" />
@@ -35,7 +36,10 @@ export default {
     return {};
   },
   methods: {
-    doLogOut() {
+    async doLogOut() {
+      let params = await new URLSearchParams();
+      params.append("username", this.$store.getters["global/getUsername"]);
+      this.$axios.post("/user/logout", params);
       this.$store.commit("global/logout");
       this.$q.notify({
         message: "已退出登录",
