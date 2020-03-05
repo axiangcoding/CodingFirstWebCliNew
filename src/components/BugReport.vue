@@ -91,7 +91,7 @@ export default {
           icon: "check",
           color: "positive",
           message: "BUG提交成功",
-          caption: "请留意系统消息哦"
+          caption: "如果不是匿名提交的，可以留意系统消息哦"
         });
       } else {
         this.$q.notify({

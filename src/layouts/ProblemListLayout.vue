@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-layout view="hhr lpR ffr">
+    <q-layout view="hHh lpR fFf">
       <q-drawer elevated show-if-above bordered :width="180">
         <q-list>
           <q-item-label header class="text-h6">本地题库</q-item-label>

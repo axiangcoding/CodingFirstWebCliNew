@@ -22,7 +22,7 @@ const routes = [
           {
             path: "/",
             name: "localProblem",
-            component: () => import("pages/problem-list/localProblem.vue"),
+            component: () => import("pages/problem-list/LocalProblem.vue"),
             meta: {
               title: "本地题库"
             }
@@ -33,6 +33,32 @@ const routes = [
             component: () => import("pages/problem-list/VJProblem.vue"),
             meta: {
               title: "Virtual Judge题库"
+            }
+          }
+        ]
+      },
+      {
+        path: "status",
+        name: "status",
+        component: () => import("layouts/StatusLayout.vue"),
+        meta: {
+          title: "评测"
+        },
+        children: [
+          {
+            path: "/",
+            name: "localStatus",
+            component: () => import("pages/status/LocalStatus.vue"),
+            meta: {
+              title: "本地评测"
+            }
+          },
+          {
+            path: "vj",
+            name: "VJStatus",
+            component: () => import("pages/status/VJStatus.vue"),
+            meta: {
+              title: "Virtual Judge评测"
             }
           }
         ]

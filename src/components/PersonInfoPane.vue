@@ -12,9 +12,9 @@
           </q-btn>
           <q-btn color="accent" label="个人信息" />
 
-          <q-btn color="warning" label="修改资料" />
           <q-btn color="negative" label="系统设置" />
           <q-btn color="orange" label="身份认证" />
+          <q-btn color="primary" label="神秘代码" />
         </div>
       </div>
       <q-separator vertical inset class="q-mx-lg" />
@@ -24,7 +24,7 @@
         </q-avatar>
 
         <div class="text-h6 q-mt-md q-mb-xs">{{this.$store.getters['global/getUsername']}}</div>
-        <q-btn color="primary" label="退出登录" push size="md" @click="doLogOut()" />
+        <q-btn color="primary" label="退出登录" glossy push size="md" @click="doLogOut()" />
       </div>
     </div>
   </div>

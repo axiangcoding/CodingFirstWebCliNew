@@ -1,13 +1,25 @@
 <template>
   <q-page>
-    <q-banner class="text-white bg-positive">TIP：本地题库指的是题目题面和样例均保留在本地的题目集，但不代表所有题目都是我们自己出的哦</q-banner>
+    <q-banner class="text-white bg-positive">TIP：本地评测指的是题目的评测由自主开发的评测机进行测评（LJ指的是Local Judge不是辣鸡）</q-banner>
     <q-card class="my-card">
       <q-card-section class="bg-blue">
         <div class="text-h6 text-white">
-          <q-avatar color="secondary">LC</q-avatar>本地题库
+          <q-avatar color="secondary">LJ</q-avatar>本地评测
         </div>
       </q-card-section>
       <q-card-section class="q-gutter-sm row items-center">
+        <q-input
+          v-model="filter.searchName"
+          standout
+          dense
+          class="q-mr-md"
+          label="昵称"
+          placeholder="注意是昵称不是用户名"
+        >
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
         <q-input
           v-model="filter.searchProId"
           standout
@@ -54,7 +66,7 @@
           <q-tooltip>重置筛选</q-tooltip>
         </q-btn>
       </q-card-section>
-      <q-card-section>
+      <!-- <q-card-section>
         <el-pagination
           layout="sizes, prev, pager, next, jumper"
           :current-page="pagination.currentPage"
@@ -93,7 +105,7 @@
           </el-table-column>
           <el-table-column prop="Title" label="题目标题" min-width="60%">
             <template slot-scope="scope">
-              <q-btn no-caps flat color="primary" :label="scope.row.title" />
+              <q-btn flat color="primary" :label="scope.row.title" />
             </template>
           </el-table-column>
           <el-table-column label="通过率（通过人数/总提交数）" min-width="50%">
@@ -141,7 +153,7 @@
             @current-change="switchPage"
           ></el-pagination>
         </div>
-      </q-card-section>
+      </q-card-section>-->
     </q-card>
     <br />
   </q-page>
@@ -151,58 +163,12 @@
 export default {
   data() {
     return {
-      loading: false,
-      filter: {
-        searchProId: "",
-        searchTitle: "",
-        searchTag: ""
+      data: {
+        searchName: ""
       },
-      pagination: {
-        currentPage: 1,
-        pageSize: 10,
-        totalRows: 0
-      },
-      data: [],
-      tagOptions: []
+      filter: {},
+      pagination: {}
     };
-  },
-  mounted() {
-    this.getProblem();
-    this.getProblemTags();
-  },
-  methods: {
-    cleanFilter() {
-      this.filter.searchProId = "";
-      this.filter.searchTitle = "";
-      this.filter.searchTag = "";
-    },
-    switchPage(val) {
-      this.pagination.currentPage = val;
-      this.getProblem();
-    },
-    sizeChange(val) {
-      this.pagination.pageSize = val;
-      this.getProblem();
-    },
-    async getProblem() {
-      this.loading = true;
-      let params = new URLSearchParams();
-      params.append("pageNum", this.pagination.currentPage);
-      params.append("pageSize", this.pagination.pageSize);
-      params.append("problemId", this.filter.searchProId);
-      params.append("tagId", this.filter.searchTag);
-      params.append("title", this.filter.searchTitle);
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios.get("/problem/list", params);
-      this.data = data.datas[0];
-      this.pagination.totalRows = data.datas[1];
-      this.loading = false;
-    },
-    async getProblemTags() {
-      let params = new URLSearchParams();
-      let data = await this.$axios.get("/problem_tag/all", params);
-      this.tagOptions = data.datas[0];
-    }
   }
 };
 </script>

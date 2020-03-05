@@ -3,7 +3,7 @@
     <q-banner class="row text-white bg-positive">欢迎注册一码当先账号，拥有账号可以体验更多内容哦。内测时期注册的账号将获得特有称号（称号系统上线时）</q-banner>
     <div class="row">
       <q-space class="col"></q-space>
-      <q-card class="col-5 q-my-xl my-card shadow-6">
+      <q-card class="col-5 q-my-md my-card shadow-6">
         <q-card-section class="bg-primary text-white">
           <div class="text-h6">注册账号</div>
         </q-card-section>
@@ -194,7 +194,6 @@ export default {
         });
         this.$router.push({ name: "index" });
       } else {
-
       }
       console.log(this.data);
     }

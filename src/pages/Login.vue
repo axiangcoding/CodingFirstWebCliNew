@@ -8,7 +8,7 @@
       <q-form @submit="onSubmit" @reset="onReset">
         <q-card-section>
           <q-input
-            v-model="loginName"
+            v-model="data.loginName"
             class="q-mb-lg"
             color="blue"
             filled
@@ -20,7 +20,7 @@
           />
           <q-input
             color="blue"
-            v-model="loginPwd"
+            v-model="data.loginPwd"
             filled
             :type="isPwd ? 'password' : 'text'"
             label="密码"
@@ -41,7 +41,7 @@
         </q-card-section>
         <q-card-actions align="around">
           <q-btn glossy type="reset" color="secondary" size="lg" flat>重 置</q-btn>
-          <q-btn glossy type="submit" color="primary" size="lg">登 录</q-btn>
+          <q-btn glossy :loading="btnLoading" type="submit" color="primary" size="lg">登 录</q-btn>
         </q-card-actions>
         <div class="row justify-between">
           <q-btn size="md" class="col-4" flat color="red">忘记密码？</q-btn>
@@ -57,10 +57,13 @@
 export default {
   data() {
     return {
-      loginName: "",
-      loginPwd: "",
+      data: {
+        loginName: "",
+        loginPwd: ""
+      },
       rememberPwd: false,
-      isPwd: true
+      isPwd: true,
+      btnLoading: false
     };
   },
   mounted() {
@@ -68,19 +71,20 @@ export default {
     this.rememberPwd = this.$q.cookies.has("rememberPwd")
       ? this.$q.cookies.get("rememberPwd")
       : this.rememberPwd;
-    this.loginName = this.$q.cookies.has("loginName")
+    this.data.loginName = this.$q.cookies.has("loginName")
       ? this.$q.cookies.get("loginName")
-      : this.loginName;
-    this.loginPwd = this.$q.cookies.has("loginPwd")
+      : this.data.loginName;
+    this.data.loginPwd = this.$q.cookies.has("loginPwd")
       ? this.$q.cookies.get("loginPwd")
-      : this.loginPwd;
+      : this.data.loginPwd;
   },
   methods: {
     onSubmit() {
+      this.btnLoading = true;
       this.$q.cookies.set("rememberPwd", this.rememberPwd);
       if (this.rememberPwd) {
-        this.$q.cookies.set("loginName", this.loginName);
-        this.$q.cookies.set("loginPwd", this.loginPwd);
+        this.$q.cookies.set("loginName", this.data.loginName);
+        this.$q.cookies.set("loginPwd", this.data.loginPwd);
       } else {
         this.$q.cookies.remove("loginName");
         this.$q.cookies.remove("loginPwd");
@@ -88,15 +92,15 @@ export default {
       this.doLogin();
     },
     onReset() {
-      this.loginName = "";
-      this.loginPwd = "";
+      this.data.loginName = "";
+      this.data.loginPwd = "";
       this.rememberPwd = false;
     },
     doRegister() {},
     async doLogin() {
       let params = new URLSearchParams({
-        username: this.loginName,
-        password: this.loginPwd
+        username: this.data.loginName,
+        password: this.data.loginPwd
       });
       let data = await this.$axios.post("/user/login", params);
       if (data.code === 10000) {
@@ -113,6 +117,7 @@ export default {
           timeout: 2000
         });
       }
+      this.btnLoading = false;
     }
   }
 };
